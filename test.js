@@ -25,8 +25,8 @@ const batch_assert = arr => arr.reduce((failure_count, test) => {
     failure_count++;
     console.log(
       "💔 - " + description + ":\n",
-      "  expected " + expected_outcome + ",\n", 
-      "  got " + expression + "."
+      "  expected " + JSON.stringify(expected_outcome) + ",\n", 
+      "  got " + JSON.stringify(expression) + "."
     );
   }
   return failure_count;
