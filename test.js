@@ -15,6 +15,24 @@ const assertions = [
   ), 
   [ 0, 0 ],
   "bricks that have already been removed should not fall" ],
+  [ fallingBricks([ 
+    [0,1,0,0] , 
+    [1,1,1,1] ,
+    [1,1,1,1] ,
+    [1,1,1,1] ], 
+    [[1,1]]
+  ), 
+  [ 11 ],
+  "single hit can drop a large chunk" ],
+  [ fallingBricks([ 
+    [1,0,1,0] , 
+    [1,0,1,0] ,
+    [1,1,1,1] ,
+    [1,1,1,1] ], 
+    [[1,0], [1,2]]
+  ), 
+  [ 0, 8 ],
+  "first hit creates opening for second hit" ],
 ]
 
 const batch_assert = arr => arr.reduce((failure_count, test) => {

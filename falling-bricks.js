@@ -46,18 +46,21 @@ const fallingBricks = (grid, hits) => {
     }
 
     dropCell(cell) {
+      let count = 0;
       this.checked = new Map();
-      const recurse = (cell, count) => {
+      const recurse = cell => {
         cell.erase();
-        return this.getAdjacentCells(cell)
+        this.getAdjacentCells(cell)
           .filter(cell => cell.val)
           .filter(this.shouldDetach)
-          .reduce((count, cell) => {
-            count ++
-            return recurse(cell, count);
-          }, count)
+          .forEach(cell => {
+            if (!cell.val) return;
+            count += 1;
+            recurse(cell);
+          })
       }
-      return recurse(cell, 0)
+      recurse(cell, 0)
+      return count;
     }
 
     shouldDetach(cell) {
@@ -75,7 +78,9 @@ const fallingBricks = (grid, hits) => {
   }
 
   grid = new Grid(grid)
-  return hits.map(grid.getCell).map(grid.dropCell)
+  return hits.map(cell => {
+    return grid.getCell(cell)
+  }).map(grid.dropCell)
 }
 
 module.exports = fallingBricks;
